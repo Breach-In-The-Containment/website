@@ -1,0 +1,148 @@
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  color: white;
+  background: #000;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.logo {
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+/* Hero section */
+.main-section {
+  height: 100vh;
+  /* Path changed: '../assets/background-index.png' is relative to style.css */
+  background: url('../assets/background-index.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 80px;
+}
+
+.main-text {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 0 20px;
+}
+
+.main-text h1 {
+  font-size: 64px;
+  font-weight: bold;
+  background: linear-gradient(to bottom, white, #cfcfcf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.main-text p {
+  font-size: 24px;
+  margin-top: 10px;
+  font-weight: 300;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 12px;
+  color: white;
+}
+
+.footer img {
+  margin-top: 10px;
+  height: 20px;
+}
+
+/* White promo / discover changes bar */
+.discover-changes {
+  background-color: white;       /* White background */
+  color: darkred;                /* Dark red text */
+  text-align: center;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.discover-changes h1 {
+  font-size: 28px;               /* Slightly larger for emphasis */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.discover-changes .even-bolder {
+  font-weight: 900;              /* Extra bold for highlights */
+}
+
+.discover-changes p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+
+/* Optional: Add subtle shadow / separation if needed */
+.discover-changes {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Logo link: solid color, no underline */
+.logo a {
+  color: white !important ;              /* Explicit color */
+  text-decoration: none !important ;     /* Remove underline */
+  background: none !important ;          /* Remove any background/gradient */
+  -webkit-text-fill-color: initial !important ; /* Ensure no gradient fills */
+}
+
+/* Discover Changes links: dark red, no underline */
+.discover-changes a {
+  color: darkred !important ;         /* Explicit color matching parent */
+  text-decoration: none !important ;     /* Remove underline */
+  background: none !important ;          /* Remove any background */
+  -webkit-text-fill-color: initial !important ; /* Prevent any gradient text */
+}
+
+/* Ensure hover, visited, active states stay the same */
+.logo a:hover,
+.logo a:visited,
+.logo a:active,
+.discover-changes a:hover,
+.discover-changes a:visited,
+.discover-changes a:active {
+  color: inherit !important ;            /* Keep color consistent on all states */
+  text-decoration: none !important ;     /* Always remove underline */
+  background: none !important ;
+  -webkit-text-fill-color: initial !important ;
+}

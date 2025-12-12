@@ -1,0 +1,17 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Trash
+.Trashes
+
+# Spotlights
+.Spotlight-V100
+
+# WebStorm/project files
+.idea/
+*.iml

@@ -1,0 +1,250 @@
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  color: white;
+  background: #000;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.logo {
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+/* Hero section */
+.main-section {
+  height: 100vh;
+  /* Path changed: '../assets/background-index.png' is relative to style.css */
+  background: url('../assets/background-index.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 80px;
+}
+
+.main-text {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 0 20px;
+}
+
+.main-text h1 {
+  font-size: 64px;
+  font-weight: bold;
+  background: linear-gradient(to bottom, white, #cfcfcf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.main-text p {
+  font-size: 24px;
+  margin-top: 10px;
+  font-weight: 300;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 12px;
+  color: white;
+}
+
+.footer img {
+  margin-top: 10px;
+  height: 20px;
+}
+
+/* White promo bar */
+.promo-bar {
+  background-color: white;
+  color: darkred;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.promo-bar h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.promo-bar .even-bolder {
+  font-weight: 900;
+}
+
+.promo-bar p {
+  font-size: 18px;
+}
+
+/* Feature section */
+.feature-section {
+  background-color: #1a0000;
+  color: white;
+}
+
+.feature-navbar {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  color: darkred;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-item {
+  text-align: center;
+  margin: 0 20px;
+  cursor: pointer; /* Keeps the hand cursor to indicate clickability */
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.feature-item:hover {
+  /* No background-color here, as per previous request */
+}
+
+/* NEW: Style the anchor tags within feature-item */
+.feature-item a {
+  text-decoration: none; /* Removes underline by default */
+  color: inherit; /* Inherits color from parent (.feature-item or .feature-navbar) */
+  display: block; /* Makes the entire area of the link clickable */
+}
+
+.feature-item a:hover {
+  text-decoration: none; /* Ensures no underline on hover */
+  color: inherit; /* Ensures color doesn't change on hover */
+}
+
+.feature-item .icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.feature-item p {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.feature-hero {
+  /* Ensure the background image is correctly referenced. It was already here. */
+  background: url('/dev/assets/fnaf/image-one.png') no-repeat center center;
+  background-size: cover;
+  padding: 100px 40px; /* Increased horizontal padding */
+  display: flex;
+  justify-content: flex-start; /* Aligns content to the left */
+  align-items: center;
+  min-height: 500px;
+  /* Removed text-align: center from here, as it's now handled by feature-text */
+}
+
+.feature-text {
+  max-width: 500px;
+  text-align: left; /* Explicitly align text to the left */
+  margin-right: auto; /* Pushes content to the left if space allows */
+}
+
+.feature-text h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.feature-text p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.feature-text button {
+  padding: 12px 24px;
+  background-color: darkred;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.feature-text button:hover {
+  background-color: #8b0000;
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px 20px;
+  }
+
+  .nav-links a {
+    margin: 10px 10px;
+  }
+
+  .main-text h1 {
+    font-size: 48px;
+  }
+
+  .main-text p {
+    font-size: 20px;
+  }
+
+  .feature-navbar {
+    flex-wrap: wrap;
+    padding: 10px 0;
+  }
+
+  .feature-item {
+    margin: 10px 15px;
+  }
+
+  .feature-hero {
+    padding: 60px 20px; /* Adjust padding for smaller screens */
+    justify-content: flex-start; /* Keep content aligned to the left */
+  }
+
+  .feature-text {
+    text-align: left; /* Ensure text remains left-aligned */
+  }
+
+  .feature-text h1 {
+    font-size: 36px;
+  }
+}

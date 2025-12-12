@@ -1,0 +1,11 @@
+# Ignore Git metadata
+.git
+.git/**
+
+# Ignore macOS resource forks
+.DS_Store
+._*
+._.*
+
+# Optional: Node modules (if you copy them later)
+node_modules

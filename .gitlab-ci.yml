@@ -1,0 +1,20 @@
+stages:
+  - deploy
+
+deploy_combined:
+  stage: deploy
+  script:
+    - rm -rf ~/deploy_temp
+    - mkdir -p ~/deploy_temp
+    - git clone -b main $CI_REPOSITORY_URL ~/deploy_temp/main
+    - git clone -b dev $CI_REPOSITORY_URL ~/deploy_temp/dev
+    - mkdir -p ~/deploy_temp/final_deploy
+    - cp -r ~/deploy_temp/main/* ~/deploy_temp/final_deploy/
+    - mkdir -p ~/deploy_temp/final_deploy/dev
+    - cp -r ~/deploy_temp/dev/* ~/deploy_temp/final_deploy/dev/
+    - mkdir -p ~/.ssh
+    - echo "$DEPLOY_KEY" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - rsync -avz --no-o --no-g --omit-dir-times --chmod=ugo=rwX -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" ~/deploy_temp/final_deploy/ gitlab@184.174.37.130:/var/www/html/
+
+
