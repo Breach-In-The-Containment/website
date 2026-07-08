@@ -1,43 +1,57 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Combine and Deploy Branches to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["master"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches:
+      - master
+      - dev
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      # 1. Checkout the master branch into a folder named 'root-site'
+      - name: Checkout Master Branch
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          ref: master
+          path: root-site
+
+      # 2. Checkout the dev branch into a folder named 'dev-site'
+      - name: Checkout Dev Branch
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev-site
+
+      # 3. Create a staging directory and assemble the website structure
+      - name: Assemble Website Structure
+        run: |
+          # Create a clean deployment directory
+          mkdir deploy_dir
+          
+          # Move all files from master branch into the root of deploy_dir
+          cp -r root-site/* deploy_dir/
+          
+          # Create the 'dev' folder inside the root
+          mkdir -p deploy_dir/dev
+          
+          # Move all files from dev branch into the 'dev' folder
+          cp -r dev-site/* deploy_dir/dev/
+          
+          # Clean up GitHub specific files so they don't deploy
+          rm -rf deploy_dir/root-site
+          rm -rf deploy_dir/dev-site
+          rm -rf deploy_dir/dev/.github
+
+      # 4. Deploy the compiled folder to the gh-pages branch
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: deploy_dir
+          branch: gh-pages # The branch GitHub Pages will serve from
