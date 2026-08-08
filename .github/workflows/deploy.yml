@@ -3,7 +3,7 @@ name: Deploy Main and Dev to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: master
 
       - name: Checkout dev branch into dev folder
         uses: actions/checkout@v4
