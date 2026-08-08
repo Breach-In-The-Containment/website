@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // Include navbar and footer
-includeHTML('.navbar-placeholder', '/dev/web/navbar.html');
+includeHTML('.navbar-placeholder', '/dev/web/navbar.html'); // Path is technically OK because of GitHub pages workflow.
 includeHTML('.footer-placeholder', '/dev/web/footer.html');
 
 

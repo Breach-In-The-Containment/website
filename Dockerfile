@@ -1,41 +1,17 @@
-# Stage 1: Base build - responsible for preparing the content
-FROM node:18 AS builder
+# Use the lightweight stable Nginx image
+FROM nginx:alpine
 
-# Install rsync and git
-RUN apt-get update && apt-get install -y rsync git && rm -rf /var/lib/apt/lists/*
+# 1. Copy our custom Nginx routing configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /app
+# 2. Copy master branch files to the root of the web server
+COPY ./master-site/ /usr/share/nginx/html/
 
-# Copy local project into /app
-COPY . .
+# 3. Create the 'dev' subdirectory inside the server root
+RUN mkdir -p /usr/share/nginx/html/dev
 
-# Temp dir for dev branch
-RUN mkdir /app/dev_content_temp
+# 4. Copy dev branch files into that subdirectory
+COPY ./dev-site/ /usr/share/nginx/html/dev/
 
-# Clone repo into temp and checkout dev branch
-RUN git clone . /app/dev_content_temp && cd /app/dev_content_temp && git checkout dev
-
-# Output folder for Nginx
-RUN mkdir -p /app/out /app/out/dev
-
-# Copy main branch content
-RUN rsync -av --exclude 'dev_content_temp/' . /app/out/
-
-# Copy dev branch content into /dev folder
-RUN rsync -av /app/dev_content_temp/ /app/out/dev/
-
-# Stage 2: Nginx web server
-FROM nginx:stable-alpine
-
-# Copy built site from builder
-COPY --from=builder /app/out /usr/share/nginx/html
-
-# Fix permissions BEFORE CMD
-RUN chmod -R 755 /usr/share/nginx/html && \
-    chown -R nginx:nginx /usr/share/nginx/html
-
-# Expose port 80
+# Expose port 80 to access the site
 EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]

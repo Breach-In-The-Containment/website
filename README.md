@@ -7,8 +7,6 @@ Made with love and sweat.
 
 Use the docker image to serve locally to test it before anything else.
 
-WARNING: After recent testing, we declare that you **need** to be on the main branch before you run docker, otherwise it will be broken.
-
 `docker build -t breach-in-the-containment . && docker run -p 8080:80 breach-in-the-containment`
 
 Then go to this URL:
