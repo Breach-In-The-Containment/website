@@ -1,9 +1,10 @@
-name: Deploy Main and Dev to GitHub Pages
+name: Deploy Master and Dev to GitHub Pages
 
 on:
   push:
     branches:
       - master
+      - dev
   workflow_dispatch:
 
 permissions:
@@ -22,7 +23,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
+      - name: Checkout master branch
         uses: actions/checkout@v4
         with:
           ref: master
