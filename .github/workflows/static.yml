@@ -1,57 +1,46 @@
-name: Combine and Deploy Branches to GitHub Pages
+name: Deploy Main and Dev to GitHub Pages
 
 on:
   push:
     branches:
-      - master
-      - dev
+      - main
+  workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout the master branch into a folder named 'root-site'
-      - name: Checkout Master Branch
+      - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: master
-          path: root-site
+          ref: main
 
-      # 2. Checkout the dev branch into a folder named 'dev-site'
-      - name: Checkout Dev Branch
+      - name: Checkout dev branch into dev folder
         uses: actions/checkout@v4
         with:
           ref: dev
-          path: dev-site
+          path: dev
 
-      # 3. Create a staging directory and assemble the website structure
-      - name: Assemble Website Structure
-        run: |
-          # Create a clean deployment directory
-          mkdir deploy_dir
-          
-          # Move all files from master branch into the root of deploy_dir
-          cp -r root-site/* deploy_dir/
-          
-          # Create the 'dev' folder inside the root
-          mkdir -p deploy_dir/dev
-          
-          # Move all files from dev branch into the 'dev' folder
-          cp -r dev-site/* deploy_dir/dev/
-          
-          # Clean up GitHub specific files so they don't deploy
-          rm -rf deploy_dir/root-site
-          rm -rf deploy_dir/dev-site
-          rm -rf deploy_dir/dev/.github
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      # 4. Deploy the compiled folder to the gh-pages branch
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: deploy_dir
-          branch: gh-pages # The branch GitHub Pages will serve from
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
